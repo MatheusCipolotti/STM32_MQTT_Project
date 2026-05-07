@@ -1,0 +1,73 @@
+#include "stm32g0b0xx.h"
+
+#include "EUSART.h"
+#include "main.h"
+#include "MCU.h"
+#include "SPI.h"
+
+#include "wizchip_conf.h"
+#include "wizchip_port.h"
+#include "socket.h"
+
+//==========Variáveis Globais============
+volatile uint32_t miliseconds_counter = 0;
+
+volatile uint8_t usart1_receive_interrupt = 0;
+volatile uint8_t usart1_receive_data = 0;
+volatile uint8_t usart1_miliseconds_counter = 0;
+volatile uint8_t usart1_index = 0;
+
+char menu_buffer[MENU_BUFFER_SIZE];
+
+//========== TIMER ============
+void TIM6_DAC_IRQHandler(void){
+    if(TIM6->SR & TIM_SR_UIF){
+        TIM6->SR &= ~TIM_SR_UIF;
+
+        miliseconds_counter++;
+
+        if(usart1_miliseconds_counter > 0){
+            usart1_miliseconds_counter--;
+        }
+
+        if(miliseconds_counter == 1000){
+			LED_ON_BOARD_TOGGLE();
+			miliseconds_counter = 0;
+		}
+    }
+}
+
+//========== UART ============
+void USART1_IRQHandler(void){
+    if(USART1->ISR & USART_ISR_RXNE_RXFNE){
+        usart1_receive_data = (uint8_t)USART1->RDR;
+
+        usart1_miliseconds_counter = 20;
+
+        if(usart1_index < MENU_BUFFER_SIZE - 1){
+            menu_buffer[usart1_index++] = usart1_receive_data;
+        } else {
+            usart1_index = 0;
+        }
+    }
+}
+
+int main(void){
+	Osc_Init();
+	GPIO_Init();
+	TIM6_init();
+	UART1_Init(UART1_BAUDRATE);
+	SPI2_Init();
+
+	reg_wizchip_cs_cbfunc(wizchip_select, wizchip_deselect);
+	reg_wizchip_spi_cbfunc(spi2_readbyte, spi2_writebyte);
+
+	uint8_t txSize[8] = {2,2,2,2,2,2,2,2};
+	uint8_t rxSize[8] = {2,2,2,2,2,2,2,2};
+
+	wizchip_init(txSize, rxSize);
+
+	while(1){
+
+	}
+}

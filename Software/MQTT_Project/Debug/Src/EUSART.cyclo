@@ -1,0 +1,7 @@
+/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include/core_cm0plus.h:741:22:__NVIC_EnableIRQ	2
+/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include/core_cm0plus.h:848:22:__NVIC_SetPriority	2
+../Src/EUSART.c:13:6:UART1_Init	1
+../Src/EUSART.c:47:6:UART1_Write	2
+../Src/EUSART.c:52:6:UART1_Write_ln	1
+../Src/EUSART.c:58:6:UART1_Write_Text	2
+../Src/EUSART.c:65:6:UART1_Write_Text_ln	1

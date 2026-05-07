@@ -1,0 +1,20 @@
+/*
+ * wizchip_port.c
+ *
+ *  Created on: 21 de abr. de 2026
+ *      Author: matheus-cipolotti
+ */
+
+#include "stm32g0b0xx.h"
+
+#include "wizchip_port.h"
+
+void wizchip_select(void)
+{
+    GPIOA->BSRR = (1 << (8 + 16)); // CS LOW
+}
+
+void wizchip_deselect(void)
+{
+    GPIOA->BSRR = (1 << 8); // CS HIGH
+}

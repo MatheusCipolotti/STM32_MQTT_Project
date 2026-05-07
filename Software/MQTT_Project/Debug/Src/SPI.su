@@ -1,0 +1,2 @@
+../Src/SPI.c:13:6:SPI2_Init	8	static
+../Src/SPI.c:67:9:SPI2_Transfer	16	static

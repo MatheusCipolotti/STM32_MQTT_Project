@@ -1,0 +1,3 @@
+V0.0 - Versão Inicial;
+V0.1 - Reorganização da inicialização do W5500, criando a função W5500_Init();
+     - Criação dos defines para o CS e RST do W5500;

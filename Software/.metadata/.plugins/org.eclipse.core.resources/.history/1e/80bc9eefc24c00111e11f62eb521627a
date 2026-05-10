@@ -16,7 +16,6 @@
 
 void W5500_Init(void);
 
-void wizchip_reset(void);
 void wizchip_select(void);
 void wizchip_deselect(void);
 

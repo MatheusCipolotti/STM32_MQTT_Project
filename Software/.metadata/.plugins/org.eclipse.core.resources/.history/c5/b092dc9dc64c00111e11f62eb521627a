@@ -78,14 +78,15 @@ int main(void){
 				if (getSn_RX_RSR(0) > 0){
 					int len = recv(0, buffer, sizeof(buffer) - 1);
 					buffer[len] = '\0';
+					UART1_Write_Text_ln((char*)buffer);
 
 					if (len > 0){
-						UART1_Write_Text_ln((char*)buffer);
-						send(0, buffer, len);									//eco
+						// Aqui você recebeu dados
+						// Exemplo: eco (responde de volta)
+						send(0, buffer, len);
 					}
 				}
 
-				//Envia os comandos da UART
 				else if(usart1_receive_interrupt == 1){
 					//Desabilita a interrupção de RX
 					USART1->CR1 &= ~USART_CR1_RXNEIE_RXFNEIE;

@@ -36,20 +36,6 @@ void GPIO_Init(void){
 	//Sem pull-up/pull-down (PUPDR = 00)
 	GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD1_Msk;
 
-	//=============================PC4===============================
-	//Configura PC4 como saída (MODER4 = 01)
-	GPIOC->MODER &= ~GPIO_MODER_MODE4_Msk;
-	GPIOC->MODER |=  GPIO_MODER_MODE4_0;
-
-	//Configura como Push-Pull (OT4 = 0)
-	GPIOC->OTYPER &= ~GPIO_OTYPER_OT4_Msk;
-
-	//Velocidade baixa (OSPEEDR4 = 00)
-	GPIOC->OSPEEDR &= ~GPIO_OSPEEDR_OSPEED4_Msk;
-
-	//Sem pull-up/pull-down (PUPDR4 = 00)
-	GPIOC->PUPDR &= ~GPIO_PUPDR_PUPD4_Msk;
-
 	//=============================PC12===============================
 	//Configura PC12 como saída (MODER12 = 01)
 	GPIOC->MODER &= ~GPIO_MODER_MODE12_Msk;

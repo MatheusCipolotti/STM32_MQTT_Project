@@ -47,7 +47,7 @@ void W5500_Init(void){
 	socket(0, Sn_MR_TCP, 5000, 0);
 
 	//Socket em modo servidor TCP
-	listen(0);													//nao bloqueante
+	listen(0);											//não bloqueante
 }
 
 void wizchip_reset(void){

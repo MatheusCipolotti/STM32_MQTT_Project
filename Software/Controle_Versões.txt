@@ -1,3 +1,6 @@
 V0.0 - Versão Inicial;
 V0.1 - Reorganização da inicialização do W5500, criando a função W5500_Init();
      - Criação dos defines para o CS e RST do W5500;
+V0.2 - TIMER 6 com lógica millis();
+     - UART1 usando o Character Match (CMF);
+     - Correção do Reset do W5500;

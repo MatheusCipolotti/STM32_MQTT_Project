@@ -53,7 +53,7 @@ void USART1_IRQHandler(void){
         }
     }
 
-    //Character match
+    // character match
 	if(USART1->ISR & USART_ISR_CMF){
 		USART1->ICR |= USART_ICR_CMCF;
 

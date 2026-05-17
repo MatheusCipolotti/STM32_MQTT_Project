@@ -7,7 +7,6 @@
 
 #include "stm32g0b0xx.h"
 
-#include "MCU.h"
 #include "SPI.h"
 
 #include "wizchip_conf.h"
@@ -27,7 +26,7 @@ wiz_NetInfo netinfo = {
 
 void W5500_Init(void){
 	//===== RESET Inicial =====
-	wizchip_reset();
+	//wizchip_reset();
 
 	//===== Callback dos perifericos =====
 	reg_wizchip_cs_cbfunc(wizchip_select, wizchip_deselect);
@@ -53,18 +52,26 @@ void W5500_Init(void){
 
 void wizchip_reset(void){
 	W5500_RST_LOW();
-	Delay_ms(1000);
+
+	for(uint8_t i; i == 10000; i++){
+
+	}
 
 	W5500_RST_HIGH();
-	Delay_ms(2000);
+
+	for(uint8_t i; i == 20000; i++){
+
+	}
 }
 
 void wizchip_select(void){
 	W5500_CS_LOW();
+    //GPIOA->BSRR = (1 << (8 + 16)); // CS LOW
 }
 
 void wizchip_deselect(void){
 	W5500_CS_HIGH();
+    //GPIOA->BSRR = (1 << 8); // CS HIGH
 }
 
 uint8_t spi2_readbyte(void){

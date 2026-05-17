@@ -61,10 +61,12 @@ void wizchip_reset(void){
 
 void wizchip_select(void){
 	W5500_CS_LOW();
+    //GPIOA->BSRR = (1 << (8 + 16)); // CS LOW
 }
 
 void wizchip_deselect(void){
 	W5500_CS_HIGH();
+    //GPIOA->BSRR = (1 << 8); // CS HIGH
 }
 
 uint8_t spi2_readbyte(void){

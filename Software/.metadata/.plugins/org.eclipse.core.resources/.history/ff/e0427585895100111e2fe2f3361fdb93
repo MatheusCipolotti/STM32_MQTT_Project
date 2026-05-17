@@ -18,6 +18,4 @@
 #define LED_ON_BOARD_HIGH()					GPIOC->BSRR = GPIO_BSRR_BS12
 #define LED_ON_BOARD_LOW()					GPIOC->BSRR = GPIO_BSRR_BR12
 
-uint32_t millis_get(void);
-
 #endif /* MAIN_H_ */

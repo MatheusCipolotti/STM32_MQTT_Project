@@ -13,13 +13,12 @@
 #include "socket.h"
 
 //==========Variáveis Globais============
-volatile uint32_t millis = 0;
+volatile uint32_t miliseconds_counter = 0;
 
 volatile uint8_t usart1_receive_interrupt = 0;
 volatile uint8_t usart1_receive_data = 0;
+volatile uint8_t usart1_miliseconds_counter = 0;
 volatile uint8_t usart1_index = 0;
-
-volatile uint8_t uart1_overflow_flag = 0;
 
 char menu_buffer[MENU_BUFFER_SIZE];
 uint8_t buffer[128];
@@ -29,38 +28,38 @@ void TIM6_DAC_IRQHandler(void){
     if(TIM6->SR & TIM_SR_UIF){
         TIM6->SR &= ~TIM_SR_UIF;
 
-        millis++;
-    }
-}
+        miliseconds_counter++;
 
-uint32_t millis_get(void)
-{
-    return millis;
+        if(usart1_miliseconds_counter >= 1){
+            usart1_miliseconds_counter--;
+        }
+
+        if(miliseconds_counter == 1000){
+			LED_ON_BOARD_TOGGLE();
+			miliseconds_counter = 0;
+		}
+    }
 }
 
 //========== UART ============
 void USART1_IRQHandler(void){
-	//Dado recebido
     if(USART1->ISR & USART_ISR_RXNE_RXFNE){
         usart1_receive_data = (uint8_t)USART1->RDR;
 
-        if(usart1_index < MENU_BUFFER_SIZE - 2){
+        usart1_miliseconds_counter = 20;
+
+        if(usart1_index < MENU_BUFFER_SIZE - 1){
             menu_buffer[usart1_index++] = usart1_receive_data;
+            if(usart1_receive_data == '\n'){
+            	menu_buffer[usart1_index++] = '\0';
+				usart1_index = 0;
+				usart1_receive_interrupt = 1;
+            }
         }
         else{
             usart1_index = 0;
-            uart1_overflow_flag = 1;
         }
     }
-
-    //Character match
-	if(USART1->ISR & USART_ISR_CMF){
-		USART1->ICR |= USART_ICR_CMCF;
-
-		menu_buffer[usart1_index++] = '\0';
-		usart1_index = 0;
-		usart1_receive_interrupt = 1;
-	}
 }
 
 int main(void){
@@ -73,14 +72,6 @@ int main(void){
 	W5500_Init();
 
 	while(1){
-		static uint32_t keep_alive_led_timer = 0;
-		uint32_t actual_timer = millis_get();
-
-		if((actual_timer - keep_alive_led_timer) >= 1000){
-			keep_alive_led_timer = actual_timer;
-			LED_ON_BOARD_TOGGLE();
-		}
-
 		switch(getSn_SR(0)){
 			case SOCK_ESTABLISHED:
 				// Se tem dados recebidos

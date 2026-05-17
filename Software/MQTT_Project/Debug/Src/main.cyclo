@@ -1,3 +1,4 @@
-../Src/main.c:27:6:TIM6_DAC_IRQHandler	4
-../Src/main.c:45:6:USART1_IRQHandler	4
-../Src/main.c:65:5:main	8
+../Src/main.c:28:6:TIM6_DAC_IRQHandler	2
+../Src/main.c:36:10:millis_get	1
+../Src/main.c:42:6:USART1_IRQHandler	4
+../Src/main.c:66:5:main	9

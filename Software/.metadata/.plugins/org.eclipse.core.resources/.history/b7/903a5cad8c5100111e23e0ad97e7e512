@@ -33,15 +33,8 @@ void UART1_Init(unsigned long baudrate){
 	//Configuração padrão: 8 bits, sem paridade, 1 stop
 	USART1->CR1 |= USART_CR1_TE | USART_CR1_RE; 								//Habilita TX e RX
 
-	//Character Match = '\n'
-	USART1->CR2 &= ~USART_CR2_ADD;
-	USART1->CR2 |= ('\n' << USART_CR2_ADD_Pos);
-
 	//Habilita a interrupção de RX
 	USART1->CR1 |= USART_CR1_RXNEIE_RXFNEIE;
-
-	//Interrupção Character Match
-	USART1->CR1 |= USART_CR1_CMIE;
 
 	//Liga USART1
 	USART1->CR1 |= USART_CR1_UE;

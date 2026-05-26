@@ -6,7 +6,8 @@ Src/main.o: ../Src/main.c \
  /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include/cmsis_gcc.h \
  /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include/mpu_armv7.h \
  /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Device/system_stm32g0xx.h \
- ../Inc/EUSART.h ../Inc/main.h ../Inc/MCU.h ../Inc/SPI.h \
+ ../Inc/EUSART.h ../Inc/LED_warnings.h ../Inc/main.h ../Inc/MCU.h \
+ ../Inc/SPI.h \
  /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/wizchip_conf.h \
  /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/W5500/w5500.h \
  /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/wizchip_port.h \
@@ -20,6 +21,7 @@ Src/main.o: ../Src/main.c \
 /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include/mpu_armv7.h:
 /media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Device/system_stm32g0xx.h:
 ../Inc/EUSART.h:
+../Inc/LED_warnings.h:
 ../Inc/main.h:
 ../Inc/MCU.h:
 ../Inc/SPI.h:

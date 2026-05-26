@@ -1,0 +1,11 @@
+../Src/LED_warnings.c:12:6:led_warnings_init	8	static
+../Src/LED_warnings.c:119:6:red_warning	8	static
+../Src/LED_warnings.c:125:6:green_warning	8	static
+../Src/LED_warnings.c:131:6:blue_warning	8	static
+../Src/LED_warnings.c:137:6:yellow_warning	8	static
+../Src/LED_warnings.c:143:6:purple_warning	8	static
+../Src/LED_warnings.c:149:6:cyan_warning	8	static
+../Src/LED_warnings.c:155:6:orange_warning	8	static
+../Src/LED_warnings.c:161:6:white_warning	8	static
+../Src/LED_warnings.c:167:6:shutdown_led_warning	8	static
+../Src/LED_warnings.c:172:6:led_warning_test	8	static

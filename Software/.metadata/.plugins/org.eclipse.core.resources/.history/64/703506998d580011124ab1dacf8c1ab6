@@ -1,0 +1,158 @@
+/*
+ * LED_warnings.c
+ *
+ *  Created on: 25 de mai. de 2026
+ *      Author: matheus-cipolotti
+ */
+
+#include "stm32g0b0xx.h"
+
+#include "LED_warnings.h"
+
+void led_warnings_init(void){
+	RCC->IOPENR |= RCC_IOPENR_GPIOBEN;
+
+	//=============================PB6===============================
+	//Configura PB6 como saída (MODER6 = 01)
+	GPIOB->MODER &= ~GPIO_MODER_MODE6_Msk;
+	GPIOB->MODER |=  GPIO_MODER_MODE6_0;
+
+	//Configura como Push-Pull (OT6 = 0)
+	GPIOB->OTYPER &= ~GPIO_OTYPER_OT6_Msk;
+
+	//Velocidade baixa (OSPEEDR6 = 00)
+	GPIOB->OSPEEDR &= ~GPIO_OSPEEDR_OSPEED6_Msk;
+
+	//Sem pull-up/pull-down (PUPDR6 = 00)
+	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPD6_Msk;
+
+	//=============================PB7===============================
+	//Configura PB7 como saída (MODER7 = 01)
+	GPIOB->MODER &= ~GPIO_MODER_MODE7_Msk;
+	GPIOB->MODER |=  GPIO_MODER_MODE7_0;
+
+	//Configura como Push-Pull (OT7 = 0)
+	GPIOB->OTYPER &= ~GPIO_OTYPER_OT7_Msk;
+
+	//Velocidade baixa (OSPEEDR7 = 00)
+	GPIOB->OSPEEDR &= ~GPIO_OSPEEDR_OSPEED7_Msk;
+
+	//Sem pull-up/pull-down (PUPDR7 = 00)
+	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPD7_Msk;
+
+	//=============================PB8===============================
+	//Configura PB8 como saída (MODER8 = 01)
+	GPIOB->MODER &= ~GPIO_MODER_MODE8_Msk;
+	GPIOB->MODER |=  GPIO_MODER_MODE8_0;
+
+	//Configura como Push-Pull (OT8 = 0)
+	GPIOB->OTYPER &= ~GPIO_OTYPER_OT8_Msk;
+
+	//Velocidade baixa (OSPEEDR8 = 00)
+	GPIOB->OSPEEDR &= ~GPIO_OSPEEDR_OSPEED8_Msk;
+
+	//Sem pull-up/pull-down (PUPDR8 = 00)
+	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPD8_Msk;
+}
+
+void red_warning(void){
+	GREEN_LED_WARNING_LOW();
+	BLUE_LED_WARNING_LOW();
+
+	RED_LED_WARNING_TOGGLE();
+}
+
+void green_warning(void){
+	RED_LED_WARNING_LOW();
+	BLUE_LED_WARNING_LOW();
+
+	GREEN_LED_WARNING_TOGGLE();
+}
+
+void blue_warning(void){
+	RED_LED_WARNING_LOW();
+	GREEN_LED_WARNING_LOW();
+
+	BLUE_LED_WARNING_TOGGLE();
+}
+
+void yellow_warning(void){
+	BLUE_LED_WARNING_LOW();
+
+	GREEN_LED_WARNING_TOGGLE();
+	RED_LED_WARNING_TOGGLE();
+}
+
+void purple_warning(void){
+	GREEN_LED_WARNING_LOW();
+
+	BLUE_LED_WARNING_TOGGLE();
+	RED_LED_WARNING_TOGGLE();
+}
+
+void cyan_warning(void){
+	RED_LED_WARNING_LOW();
+
+	BLUE_LED_WARNING_TOGGLE();
+	GREEN_LED_WARNING_TOGGLE();
+}
+
+void white_warning(void){
+	BLUE_LED_WARNING_TOGGLE();
+	GREEN_LED_WARNING_TOGGLE();
+	RED_LED_WARNING_TOGGLE();
+}
+
+void led_warning_test(void){
+	static uint8_t i = 0;
+
+	switch(i){
+		case 0:
+			red_warning();
+			i++;
+
+			break;
+
+		case 1:
+			green_warning();
+			i++;
+
+			break;
+
+		case 2:
+			blue_warning();
+			i++;
+
+			break;
+
+		case 3:
+			yellow_warning();
+			i++;
+
+			break;
+
+		case 4:
+			purple_warning();
+			i++;
+
+			break;
+
+		case 5:
+			cyan_warning();
+			i++;
+
+			break;
+
+		case 6:
+			white_warning();
+			i++;
+
+			break;
+
+		default:
+			i = 0;
+
+			break;
+	}
+
+}

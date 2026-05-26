@@ -17,6 +17,7 @@
 "./Ethernet_W5500/wizchip_conf.o"
 "./Ethernet_W5500/wizchip_port.o"
 "./Src/EUSART.o"
+"./Src/LED_warnings.o"
 "./Src/MCU.o"
 "./Src/SPI.o"
 "./Src/main.o"

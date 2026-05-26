@@ -1,14 +1,14 @@
-22:30:28 **** Incremental Build of configuration Debug for project MQTT_Project ****
+11:04:48 **** Incremental Build of configuration Debug for project MQTT_Project ****
 make -j16 all 
-arm-none-eabi-gcc "../Ethernet_W5500/wizchip_port.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32G0 -DSTM32G0B0RETx -c -I../Inc -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Device -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500 -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/MQTT -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/MQTT/MQTTPacket/src -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Ethernet_W5500/wizchip_port.d" -MT"Ethernet_W5500/wizchip_port.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Ethernet_W5500/wizchip_port.o"
-In file included from ../Ethernet_W5500/wizchip_port.c:16:
-../Ethernet_W5500/socket.h:314:15: warning: 'connect_IO_6' declared 'static' but never defined [-Wunused-function]
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32G0 -DSTM32G0B0RETx -c -I../Inc -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Device -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/CMSIS/Include -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500 -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/MQTT -I/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/MQTT/MQTTPacket/src -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+In file included from ../Src/main.c:14:
+/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/socket.h:314:15: warning: 'connect_IO_6' declared 'static' but never defined [-Wunused-function]
   314 | static int8_t connect_IO_6(uint8_t sn, uint8_t * addr, uint16_t port, uint8_t addrlen);
       |               ^~~~~~~~~~~~
-../Ethernet_W5500/socket.h:404:16: warning: 'sendto_IO_6' declared 'static' but never defined [-Wunused-function]
+/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/socket.h:404:16: warning: 'sendto_IO_6' declared 'static' but never defined [-Wunused-function]
   404 | static int32_t sendto_IO_6(uint8_t sn, uint8_t * buf, uint16_t len, uint8_t * addr, uint16_t port, uint8_t addrlen);
       |                ^~~~~~~~~~~
-../Ethernet_W5500/socket.h:439:16: warning: 'recvfrom_IO_6' declared 'static' but never defined [-Wunused-function]
+/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/Ethernet_W5500/socket.h:439:16: warning: 'recvfrom_IO_6' declared 'static' but never defined [-Wunused-function]
   439 | static int32_t recvfrom_IO_6(uint8_t sn, uint8_t * buf, uint16_t len, uint8_t * addr, uint16_t *port, uint8_t *addrlen);
       |                ^~~~~~~~~~~~~
 arm-none-eabi-gcc -o "MQTT_Project.elf" @"objects.list"   -mcpu=cortex-m0plus -T"/media/matheus-cipolotti/MDC/SENAI/TCC/Software/MQTT_Project/STM32G0B0RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MQTT_Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -19,7 +19,7 @@ arm-none-eabi-objdump -h -S MQTT_Project.elf  > "MQTT_Project.list"
 arm-none-eabi-objcopy  -O ihex MQTT_Project.elf  "MQTT_Project.hex"
 arm-none-eabi-objcopy  -O binary MQTT_Project.elf  "MQTT_Project.bin"
    text	   data	    bss	    dec	    hex	filename
-   8344	     72	   1776	  10192	   27d0	MQTT_Project.elf
+   8932	     72	   1784	  10788	   2a24	MQTT_Project.elf
 Finished building: default.size.stdout
  
 Finished building: MQTT_Project.list
@@ -27,11 +27,4 @@ Finished building: MQTT_Project.list
 Finished building: MQTT_Project.bin
 Finished building: MQTT_Project.hex
  
- 
-22:30:32 **** Incremental Build of configuration Debug for project MQTT_Project ****
-make -j16 all 
-arm-none-eabi-size  MQTT_Project.elf 
-   text	   data	    bss	    dec	    hex	filename
-   8344	     72	   1776	  10192	   27d0	MQTT_Project.elf
-Finished building: default.size.stdout
  

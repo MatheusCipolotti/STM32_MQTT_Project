@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "EUSART.h"
+#include "LED_warnings.h"
 #include "main.h"
 #include "MCU.h"
 #include "SPI.h"
@@ -19,7 +20,9 @@ volatile uint8_t usart1_receive_interrupt = 0;
 volatile uint8_t usart1_receive_data = 0;
 volatile uint8_t usart1_index = 0;
 
+//==========Error Flags============
 volatile uint8_t uart1_overflow_flag = 0;
+uint8_t W5500_status_flag = 0;
 
 char menu_buffer[MENU_BUFFER_SIZE];
 uint8_t buffer[128];
@@ -65,21 +68,42 @@ void USART1_IRQHandler(void){
 
 int main(void){
 	Osc_Init();
+	led_warnings_init();
 	GPIO_Init();
 	TIM6_init();
 	UART1_Init(UART1_BAUDRATE);
 	SPI2_Init();
 
-	W5500_Init();
+	W5500_status_flag = W5500_Init();
 
 	while(1){
 		static uint32_t keep_alive_led_timer = 0;
 		uint32_t actual_timer = millis_get();
 
+		//Logica para o Keep Alive e o status de funcionamento do microcontrolador
 		if((actual_timer - keep_alive_led_timer) >= 1000){
+			static uint8_t led_warning_index = 0;
 			keep_alive_led_timer = actual_timer;
-			LED_ON_BOARD_TOGGLE();
-		}
+
+			switch(led_warning_index){
+				case 0:
+					green_warning();
+					led_warning_index++;
+
+					break;
+
+				case 1:
+					shutdown_led_warning();
+					led_warning_index--;
+
+					break;
+
+				default:
+					led_warning_index = 0;
+
+					break;
+			}
+		}//Fim
 
 		switch(getSn_SR(0)){
 			case SOCK_ESTABLISHED:

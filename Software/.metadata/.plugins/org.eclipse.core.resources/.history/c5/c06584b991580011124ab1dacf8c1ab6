@@ -1,0 +1,216 @@
+/*
+ * LED_warnings.c
+ *
+ *  Created on: 25 de mai. de 2026
+ *      Author: matheus-cipolotti
+ */
+
+#include "stm32g0b0xx.h"
+
+#include "LED_warnings.h"
+
+void led_warnings_init(void){
+		//Habilita clocks
+
+	    RCC->IOPENR |= RCC_IOPENR_GPIOBEN;   			// GPIOB clock
+	    RCC->APBENR1 |= RCC_APBENR1_TIM4EN; 			// TIM4 clock
+
+	    //Configura PB6, PB7 e PB8 como Alternate Function/
+
+	    // MODER = 10 (Alternate Function)
+
+	    GPIOB->MODER &= ~(
+	          (3U << (6 * 2))
+	        | (3U << (7 * 2))
+	        | (3U << (8 * 2))
+	    );
+
+	    GPIOB->MODER |= (
+	          (2U << (6 * 2))
+	        | (2U << (7 * 2))
+	        | (2U << (8 * 2))
+	    );
+
+	    //Output type Push-Pull
+
+	    GPIOB->OTYPER &= ~(
+	          (1U << 6)
+	        | (1U << 7)
+	        | (1U << 8)
+	    );
+
+	    //Velocidade alta
+
+	    GPIOB->OSPEEDR |= (
+	          (3U << (6 * 2))
+	        | (3U << (7 * 2))
+	        | (3U << (8 * 2))
+	    );
+
+	    //Sem pull-up/pull-down
+
+	    GPIOB->PUPDR &= ~(
+	          (3U << (6 * 2))
+	        | (3U << (7 * 2))
+	        | (3U << (8 * 2))
+	    );
+
+	    //Alternate Function/
+
+	    // PB6 -> AF9
+	    GPIOB->AFR[0] &= ~(0xF << (6 * 4));
+	    GPIOB->AFR[0] |=  (0x9 << (6 * 4));
+
+	    // PB7 -> AF9
+	    GPIOB->AFR[0] &= ~(0xF << (7 * 4));
+	    GPIOB->AFR[0] |=  (0x9 << (7 * 4));
+
+	    // PB8 -> AF9
+	    GPIOB->AFR[1] &= ~(0xF << ((8 - 8) * 4));
+	    GPIOB->AFR[1] |=  (0x9 << ((8 - 8) * 4));
+
+	    /* =====================================================
+	       Configuração base do timer
+	       ===================================================== */
+
+	    // Timer clock = 64 MHz
+	    // PSC = 63 -> 1 MHz
+	    // ARR = 999 -> 1 kHz
+
+	    TIM4->PSC = 63;
+	    TIM4->ARR = 255;						//8 bits
+
+	    //PWM mode
+
+	    // CH1
+	    TIM4->CCMR1 &= ~(7 << 4);
+	    TIM4->CCMR1 |=  (6 << 4);
+	    TIM4->CCMR1 |= TIM_CCMR1_OC1PE;
+
+	    // CH2
+	    TIM4->CCMR1 &= ~(7 << 12);
+	    TIM4->CCMR1 |=  (6 << 12);
+	    TIM4->CCMR1 |= TIM_CCMR1_OC2PE;
+
+	    // CH3
+	    TIM4->CCMR2 &= ~(7 << 4);
+	    TIM4->CCMR2 |=  (6 << 4);
+	    TIM4->CCMR2 |= TIM_CCMR2_OC3PE;
+
+	    //Duty cycle inicial
+
+	    TIM4->CCR1 = 100;
+	    TIM4->CCR2 = 100;
+	    TIM4->CCR3 = 100;
+
+	    //Habilita saídas
+
+	    TIM4->CCER |= TIM_CCER_CC1E;
+	    TIM4->CCER |= TIM_CCER_CC2E;
+	    TIM4->CCER |= TIM_CCER_CC3E;
+
+	    TIM4->CR1 |= TIM_CR1_ARPE;				//Auto-reload preload
+	    TIM4->EGR |= TIM_EGR_UG;				//Atualiza registradores
+	    TIM4->BDTR |= TIM_BDTR_MOE;    								//Ativa as saídas principais
+
+	    TIM4->CR1 |= TIM_CR1_CEN;				//Liga timer
+}
+
+void red_warning(void){
+	TIM4->CCR1 = 255; 							//Vermelho
+	TIM4->CCR2 = 0;   							//Verde
+	TIM4->CCR3 = 0;   							//Azul
+}
+
+void green_warning(void){
+	TIM4->CCR1 = 0; 							//Vermelho
+	TIM4->CCR2 = 255;   						//Verde
+	TIM4->CCR3 = 0;   							//Azul
+}
+
+void blue_warning(void){
+	TIM4->CCR1 = 0; 							//Vermelho
+	TIM4->CCR2 = 0;   							//Verde
+	TIM4->CCR3 = 255;   						//Azul
+}
+
+void yellow_warning(void){
+	BLUE_LED_WARNING_LOW();
+
+	GREEN_LED_WARNING_HIGH();
+	RED_LED_WARNING_HIGH();
+}
+
+void purple_warning(void){
+	GREEN_LED_WARNING_LOW();
+
+	BLUE_LED_WARNING_HIGH();
+	RED_LED_WARNING_HIGH();
+}
+
+void cyan_warning(void){
+	RED_LED_WARNING_LOW();
+
+	BLUE_LED_WARNING_HIGH();
+	GREEN_LED_WARNING_HIGH();
+}
+
+void white_warning(void){
+	BLUE_LED_WARNING_HIGH();
+	GREEN_LED_WARNING_HIGH();
+	RED_LED_WARNING_HIGH();
+}
+
+void led_warning_test(void){
+	static uint8_t i = 0;
+
+	switch(i){
+		case 0:
+			red_warning();
+			i++;
+
+			break;
+
+		case 1:
+			green_warning();
+			i++;
+
+			break;
+
+		case 2:
+			blue_warning();
+			i++;
+
+			break;
+/*
+		case 3:
+			yellow_warning();
+			i++;
+
+			break;
+
+		case 4:
+			purple_warning();
+			i++;
+
+			break;
+
+		case 5:
+			cyan_warning();
+			i++;
+
+			break;
+
+		case 6:
+			white_warning();
+			i++;
+
+			break;
+*/
+		default:
+			i = 0;
+
+			break;
+	}
+
+}

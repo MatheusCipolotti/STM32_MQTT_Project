@@ -1,0 +1,31 @@
+/*
+ * LED_warnings.h
+ *
+ *  Created on: 25 de mai. de 2026
+ *      Author: matheus-cipolotti
+ */
+
+#ifndef LED_WARNINGS_H_
+#define LED_WARNINGS_H_
+
+#define RED_LED_WARNING_TOGGLE()				GPIOB->ODR ^= GPIO_ODR_OD6
+#define RED_LED_WARNING_HIGH()					GPIOB->BSRR = GPIO_BSRR_BS6
+#define RED_LED_WARNING_LOW()					GPIOB->BSRR = GPIO_BSRR_BR6
+
+#define BLUE_LED_WARNING_TOGGLE()				GPIOB->ODR ^= GPIO_ODR_OD7
+#define BLUE_LED_WARNING_HIGH()					GPIOB->BSRR = GPIO_BSRR_BS7
+#define BLUE_LED_WARNING_LOW()					GPIOB->BSRR = GPIO_BSRR_BR7
+
+#define GREEN_LED_WARNING_TOGGLE()				GPIOB->ODR ^= GPIO_ODR_OD8
+#define GREEN_LED_WARNING_HIGH()				GPIOB->BSRR = GPIO_BSRR_BS8
+#define GREEN_LED_WARNING_LOW()					GPIOB->BSRR = GPIO_BSRR_BR8
+
+void led_warnings_init(void);
+
+void red_warning(void);
+void green_warning(void);
+void blue_warning(void);
+
+void led_warning_test(void);
+
+#endif /* LED_WARNINGS_H_ */

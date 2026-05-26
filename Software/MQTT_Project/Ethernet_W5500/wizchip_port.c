@@ -25,30 +25,45 @@ wiz_NetInfo netinfo = {
 	.dhcp = NETINFO_STATIC										//IP Fixo
 };
 
-void W5500_Init(void){
+uint8_t W5500_Init(void){
+	uint8_t version;
+
 	//===== RESET Inicial =====
 	wizchip_reset();
 
-	//===== Callback dos perifericos =====
-	reg_wizchip_cs_cbfunc(wizchip_select, wizchip_deselect);
-	reg_wizchip_spi_cbfunc(spi2_readbyte, spi2_writebyte);
+	//===== Teste de Integridade =====
+	version = getVERSIONR();
 
-	uint8_t txSize[8] = {2,2,2,2,2,2,2,2};
-	uint8_t rxSize[8] = {2,2,2,2,2,2,2,2};
+	//W5500 detectado
+	if(version == 0x04){
+		//===== Callback dos perifericos =====
+		reg_wizchip_cs_cbfunc(wizchip_select, wizchip_deselect);
+		reg_wizchip_spi_cbfunc(spi2_readbyte, spi2_writebyte);
 
-	wizchip_init(txSize, rxSize);
-	wizchip_setnetinfo(&netinfo);
+		uint8_t txSize[8] = {2,2,2,2,2,2,2,2};
+		uint8_t rxSize[8] = {2,2,2,2,2,2,2,2};
 
-	//===== Configura um servidor TCP =====
-	//Cria o Socket
-	// 0 - Numero do Socket
-	// Sn_MR_TCP - Modo do Socket (TCP)
-	// 5000 - Porta Local
-	// 0 - Flags
-	socket(0, Sn_MR_TCP, 5000, 0);
+		wizchip_init(txSize, rxSize);
+		wizchip_setnetinfo(&netinfo);
 
-	//Socket em modo servidor TCP
-	listen(0);													//nao bloqueante
+		//===== Configura um servidor TCP =====
+		//Cria o Socket
+		// 0 - Numero do Socket
+		// Sn_MR_TCP - Modo do Socket (TCP)
+		// 5000 - Porta Local
+		// 0 - Flags
+		socket(0, Sn_MR_TCP, 5000, 0);
+
+		//Socket em modo servidor TCP
+		listen(0);												//nao bloqueante
+	}
+
+	//W5500 erro
+	else{
+
+	}
+
+	return version;
 }
 
 void wizchip_reset(void){

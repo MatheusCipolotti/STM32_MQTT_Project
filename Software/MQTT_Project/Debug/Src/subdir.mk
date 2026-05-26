@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Src/EUSART.c \
+../Src/LED_warnings.c \
 ../Src/MCU.c \
 ../Src/SPI.c \
 ../Src/main.c \
@@ -14,6 +15,7 @@ C_SRCS += \
 
 OBJS += \
 ./Src/EUSART.o \
+./Src/LED_warnings.o \
 ./Src/MCU.o \
 ./Src/SPI.o \
 ./Src/main.o \
@@ -22,6 +24,7 @@ OBJS += \
 
 C_DEPS += \
 ./Src/EUSART.d \
+./Src/LED_warnings.d \
 ./Src/MCU.d \
 ./Src/SPI.d \
 ./Src/main.d \
@@ -36,7 +39,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/EUSART.cyclo ./Src/EUSART.d ./Src/EUSART.o ./Src/EUSART.su ./Src/MCU.cyclo ./Src/MCU.d ./Src/MCU.o ./Src/MCU.su ./Src/SPI.cyclo ./Src/SPI.d ./Src/SPI.o ./Src/SPI.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
+	-$(RM) ./Src/EUSART.cyclo ./Src/EUSART.d ./Src/EUSART.o ./Src/EUSART.su ./Src/LED_warnings.cyclo ./Src/LED_warnings.d ./Src/LED_warnings.o ./Src/LED_warnings.su ./Src/MCU.cyclo ./Src/MCU.d ./Src/MCU.o ./Src/MCU.su ./Src/SPI.cyclo ./Src/SPI.d ./Src/SPI.o ./Src/SPI.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
 
 .PHONY: clean-Src
 

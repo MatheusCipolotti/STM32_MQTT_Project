@@ -4,3 +4,5 @@ V0.1 - Reorganização da inicialização do W5500, criando a função W5500_Ini
 V0.2 - TIMER 6 com lógica millis();
      - UART1 usando o Character Match (CMF);
      - Correção do Reset do W5500;
+V0.3 - Inclusão de um LED tricolor para indicação de status do programa além do Keep Alive;
+     - Inclusão de lógica para verificação de integridade do W5500 (falta tratar a variável);

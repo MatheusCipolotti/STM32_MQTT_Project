@@ -14,7 +14,7 @@
 #define W5500_CS_HIGH()						GPIOA->BSRR = GPIO_BSRR_BS8
 #define W5500_CS_LOW()						GPIOA->BSRR = GPIO_BSRR_BR8
 
-void W5500_Init(void);
+uint8_t W5500_Init(void);
 
 void wizchip_reset(void);
 void wizchip_select(void);
